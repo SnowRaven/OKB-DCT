@@ -386,7 +386,11 @@ local function getkeys(objtype)
 			["name"]    = "ondemand",
 			["type"]	= "boolean",
 			["default"] = false,
-		},
+		}, {
+			["name"]    = "conditions",
+			["type"]	= "table",
+			["default"] = {},
+		}
 	}
 
 	if notpldata[objtype] == nil then

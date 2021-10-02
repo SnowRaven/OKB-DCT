@@ -24,8 +24,9 @@ local dctutils = require("dct.utils")
 local Goal     = require("dct.Goal")
 local Marshallable = require("dct.libs.Marshallable")
 local Observable   = require("dct.libs.Observable")
-local Logger   = require("dct.libs.Logger")
-local settings = _G.dct.settings
+local Logger       = require("dct.libs.Logger")
+local Conditions   = require("dct.assets.AssetConditions")
+local settings     = _G.dct.settings
 
 local norenametype = {
 	[dctenum.assetType.SQUADRONPLAYER] = true,
@@ -142,6 +143,7 @@ function AssetBase:__init(template)
 		"extramarks",
 		"nocull",
 		"ondemand",
+		"conditions",
 	})
 	self._spawned    = false
 	self._dead       = false
@@ -199,6 +201,7 @@ function AssetBase:_completeinit(template)
 		end
 	end
 	self.codename = generateCodename(template)
+	self.conditions = Conditions.from(template, self.name)
 
 	for _, side in pairs(coalition.side) do
 		self._intel[side] = template.intel or 0
@@ -246,6 +249,12 @@ function AssetBase:unmarshal(data)
 	assert(self._initcomplete == false,
 		"runtime error: init completed already")
 	Marshallable.unmarshal(self, data)
+	if self.conditions ~= nil then
+		-- Restore class methods
+		local conditions = Conditions()
+		conditions:unmarshal(self.conditions)
+		self.conditions = conditions
+	end
 	self:_setup()
 	self._initcomplete = true
 end
