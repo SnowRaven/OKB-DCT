@@ -38,7 +38,6 @@ enum.assetType = {
 	["FRONTLINE"]   = 25,
 	["CONVOY"]      = 26,
 	["ARTILLERY"]   = 1027,
-	["DAS"]         = 1037,
 
 	-- extended type set
 	["BUNKER"]      = 15,
