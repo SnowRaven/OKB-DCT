@@ -13,7 +13,7 @@ env:
 
 jobs:
   luacheck:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Install Packages
       run: sudo apt-get install $PACKAGES
@@ -25,7 +25,7 @@ jobs:
       run: luacheck .
 
   runtests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Install Packages
       run: sudo apt-get install $PACKAGES
@@ -38,7 +38,7 @@ jobs:
     - name: Checkout lua-libs
       uses: actions/checkout@v2
       with:
-        repository: ricmzn/lua-libs
+        repository: team-limakilo/lua-libs
         path: lua-libs
 
     - name: Run Tests
